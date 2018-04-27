@@ -104,8 +104,38 @@ int main(void)
         #endif
         
         /* Add your code for implementing the shell's logic here */
-        while (args[0] != "exit"){
-            printf("say cheese");
+        while(1){
+            char userCommand[COMMANDLINE_BUFSIZE];
+
+            char *userArgs[MAX_TOKENS];
+
+            int user_args_count;
+
+            if (args[0] == "exit"){
+                break;
+            } 
+            
+            printf("Enter your commands here:\n");
+            fgets(userCommand, sizeof userCommand, stdin);
+            parse_commandline(userCommand, userArgs, user_args_count);
+
+            int frk = fork();
+
+            if (frk == 0){
+                if (strcmp(args[0], "cd") == 0){
+                    if(chdir(args[1]) == 0) continue;
+                    perror("chdir");
+                } else {
+                    execvp(userArgs[0], userArgs);
+                }
+            } else if (frk < 0){
+                printf("The fork failed: exiting\n");
+                exit(1);
+            } else {
+                waitpid(frk, NULL, 0);
+            }
+            
+            break;
         }
     }
 
