@@ -109,9 +109,9 @@ int main(void)
 
             char *userArgs[MAX_TOKENS];
 
-            int user_args_count;
+            int *user_args_count;
 
-            if (args[0] == "exit"){
+            if (strcmp(userArgs[0], "exit") == 0){
                 break;
             } 
             
