@@ -29,6 +29,8 @@
  *
  * @returns A copy of args for convenience.
  */
+
+//function takes the full string, then the array of strings, then the number of arguments as params
 char **parse_commandline(char *str, char **args, int *args_count)
 {
     char *token;
@@ -37,6 +39,7 @@ char **parse_commandline(char *str, char **args, int *args_count)
 
     token = strtok(str, " \t\n\r");
 
+    //while token isn't null and there are less than 99 tokens
     while (token != NULL && *args_count < MAX_TOKENS - 1) {
         args[(*args_count)++] = token;
 
@@ -101,7 +104,9 @@ int main(void)
         #endif
         
         /* Add your code for implementing the shell's logic here */
-        
+        while (args[0] != "exit"){
+            printf("say cheese");
+        }
     }
 
     return 0;
